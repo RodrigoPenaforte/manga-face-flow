@@ -1,10 +1,19 @@
 import { CTAButton } from "@/components/ui/cta-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CheckCircle, Book, Video, Gift, Clock, Shield, MessageCircle } from "lucide-react";
 import heroImage from "@/assets/manga-ebook-hero.jpg";
 import expressionsImage from "@/assets/manga-expression-ebook.png";
+import { useEffect } from "react";
+import { activateProtection, handleCheckoutClick } from "@/lib/protection";
+
 export function MangaLanding() {
+  useEffect(() => {
+    // Ativa todas as proteções contra clonagem
+    activateProtection();
+  }, []);
+
   return <div className="min-h-screen bg-background">
     {/* Hero Section */}
     <section className="relative px-4 py-16 bg-gradient-to-br from-background to-card">
@@ -27,7 +36,7 @@ export function MangaLanding() {
           <div className="flex justify-center">
             <img src={heroImage} alt="eBook Como Desenhar Rosto Estilo Mangá" className="max-w-full h-auto rounded-lg shadow-2xl" />
           </div>
-          <CTAButton size="lg" className="w-full lg:w-auto" href="https://pay.kiwify.com.br/i4D9YlE">
+          <CTAButton size="lg" className="w-full lg:w-auto" onClick={handleCheckoutClick}>
             Quero Aprender Agora
           </CTAButton>
         </div>
@@ -130,7 +139,7 @@ export function MangaLanding() {
                 🎉 Ao adquirir hoje, você leva tudo isso por apenas <span>R$19,90!</span>
               </p>
             </div>
-            <CTAButton size="lg" className="w-full" href="https://pay.kiwify.com.br/i4D9YlE">SIM, QUERO COMEÇAR AGORA</CTAButton>
+            <CTAButton size="lg" className="w-full" onClick={handleCheckoutClick}>SIM, QUERO COMEÇAR AGORA</CTAButton>
           </div>
         </div>
       </div>
@@ -165,7 +174,32 @@ export function MangaLanding() {
         <h2 className="text-3xl font-bold text-foreground mb-8">
           Comece a desenhar rostos incríveis hoje mesmo!
         </h2>
-        <CTAButton size="lg" className="mb-8" href="https://pay.kiwify.com.br/i4D9YlE">SIM, QUERO COMEÇAR AGORAAAAAAAAAAAAA</CTAButton>
+        <CTAButton size="lg" className="mb-8" onClick={handleCheckoutClick}>SIM, QUERO COMEÇAR AGORA</CTAButton>
+      </div>
+    </section>
+
+     {/* FAQ Section */}
+     <section className="py-16 bg-background">
+      <div className="container mx-auto max-w-4xl px-4">
+        <h2 className="text-3xl font-bold text-foreground text-center mb-10">Perguntas Frequentes</h2>
+        <Accordion type="single" collapsible className="space-y-4">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>O curso é indicado para quem nunca desenhou antes?</AccordionTrigger>
+            <AccordionContent>Sim! O curso é totalmente indicado para iniciantes e também para quem já desenha e quer melhorar seus traços no estilo mangá.</AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>Recebo acesso imediato?</AccordionTrigger>
+            <AccordionContent>Sim! Assim que sua compra for confirmada, você recebe tudo automaticamente no seu e-mail e já pode começar a estudar.</AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>Como recebo o material?</AccordionTrigger>
+            <AccordionContent>Você receberá o link para o eBook e acesso às aulas por e-mail logo após a compra.</AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-4">
+            <AccordionTrigger>O acesso ao curso é vitalício?</AccordionTrigger>
+            <AccordionContent>Sim, o curso é seu para sempre. Você pode assistir quantas vezes quiser.</AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </section>
 
