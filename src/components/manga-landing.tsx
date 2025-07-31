@@ -5,17 +5,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { CheckCircle, Book, Video, Gift, Clock, Shield, MessageCircle } from "lucide-react";
 import heroImage from "@/assets/manga-ebook-hero.jpg";
 import expressionsImage from "@/assets/manga-expression-ebook.png";
-import { useEffect } from "react";
-import { activateProtection, handleCheckoutClick } from "@/lib/protection";
-
-// export function MangaLanding() {
-//   useEffect(() => {
-//     // Ativa todas as proteções contra clonagem
-//     activateProtection();
-//   }, []);
-
-  // return 
-  <div className="min-h-screen bg-background">
+export function MangaLanding() {
+  return <div className="min-h-screen bg-background">
     {/* Hero Section */}
     <section className="relative px-4 py-16 bg-gradient-to-br from-background to-card">
       <div className="container mx-auto max-w-6xl">
@@ -37,7 +28,7 @@ import { activateProtection, handleCheckoutClick } from "@/lib/protection";
           <div className="flex justify-center">
             <img src={heroImage} alt="eBook Como Desenhar Rosto Estilo Mangá" className="max-w-full h-auto rounded-lg shadow-2xl" />
           </div>
-          <CTAButton size="lg" className="w-full lg:w-auto" onClick={handleCheckoutClick}>
+          <CTAButton size="lg" className="w-full lg:w-auto" href="https://pay.kiwify.com.br/i4D9YlE">
             Quero Aprender Agora
           </CTAButton>
         </div>
@@ -140,7 +131,7 @@ import { activateProtection, handleCheckoutClick } from "@/lib/protection";
                 🎉 Ao adquirir hoje, você leva tudo isso por apenas <span>R$19,90!</span>
               </p>
             </div>
-            <CTAButton size="lg" className="w-full" onClick={handleCheckoutClick}>SIM, QUERO COMEÇAR AGORA</CTAButton>
+            <CTAButton size="lg" className="w-full" href="https://pay.kiwify.com.br/i4D9YlE">SIM, QUERO COMEÇAR AGORA</CTAButton>
           </div>
         </div>
       </div>
@@ -175,7 +166,7 @@ import { activateProtection, handleCheckoutClick } from "@/lib/protection";
         <h2 className="text-3xl font-bold text-foreground mb-8">
           Comece a desenhar rostos incríveis hoje mesmo!
         </h2>
-        <CTAButton size="lg" className="mb-8" onClick={handleCheckoutClick}>SIM, QUERO COMEÇAR AGORA</CTAButton>
+        <CTAButton size="lg" className="mb-8" href="https://pay.kiwify.com.br/i4D9YlE">SIM, QUERO COMEÇAR AGORA</CTAButton>
       </div>
     </section>
 
@@ -228,4 +219,4 @@ import { activateProtection, handleCheckoutClick } from "@/lib/protection";
       </div>
     </footer>
   </div>;
-// }
+}
