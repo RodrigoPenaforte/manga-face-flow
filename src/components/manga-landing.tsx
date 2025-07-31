@@ -8,14 +8,14 @@ import expressionsImage from "@/assets/manga-expression-ebook.png";
 import { useEffect } from "react";
 import { activateProtection, handleCheckoutClick } from "@/lib/protection";
 
-// export function MangaLanding() {
-//   useEffect(() => {
-//     // Ativa todas as proteções contra clonagem
-//     activateProtection();
-//   }, []);
+export function MangaLanding() {
+  useEffect(() => {
+    // Ativa todas as proteções contra clonagem
+    activateProtection();
+  }, []);
 
-  // return 
-  <div className="min-h-screen bg-background">
+  return (
+    <div className="min-h-screen bg-background">
     {/* Hero Section */}
     <section className="relative px-4 py-16 bg-gradient-to-br from-background to-card">
       <div className="container mx-auto max-w-6xl">
@@ -227,5 +227,6 @@ import { activateProtection, handleCheckoutClick } from "@/lib/protection";
         </div>
       </div>
     </footer>
-  </div>;
-// }
+    </div>
+  );
+}
