@@ -23,13 +23,13 @@ export function MangaLanding() {
             <p className="text-lg text-foreground mb-8">
               Com um método simples e comprovado, você vai aprender a criar personagens no estilo japonês, com traços profissionais e expressivos!
             </p>
-            <CTAButton size="lg" className="w-full lg:w-auto" href="https://pay.kiwify.com.br/i4D9YlE">
-              Quero Aprender Agora
-            </CTAButton>
           </div>
           <div className="flex justify-center">
             <img src={heroImage} alt="eBook Como Desenhar Rosto Estilo Mangá" className="max-w-full h-auto rounded-lg shadow-2xl" />
           </div>
+          <CTAButton size="lg" className="w-full lg:w-auto" href="https://pay.kiwify.com.br/i4D9YlE">
+            Quero Aprender Agora
+          </CTAButton>
         </div>
       </div>
     </section>
@@ -77,10 +77,6 @@ export function MangaLanding() {
     {/* Why It Works */}
     <section className="py-16 bg-card">
       <div className="container mx-auto max-w-4xl px-4 text-center">
-        <h2 className="text-3xl font-bold text-foreground mb-8">
-          <span className="text-red-600 line-through mr-2">R$97,90</span>
-          por apenas R$19,90!
-        </h2>
         <p className="text-lg text-foreground leading-relaxed">
           Diferente de tutoriais soltos e confusos da internet, aqui você aprende com uma estrutura clara,
           passo a passo real e um método que respeita o seu tempo e nível de experiência.
@@ -97,8 +93,9 @@ export function MangaLanding() {
           <Badge className="mb-4 bg-accent text-accent-foreground text-lg px-4 py-2">
             OFERTA POR TEMPO LIMITADO
           </Badge>
-          <h2 className="text-3xl font-bold text-foreground mb-4">
-            De R$49,90 por apenas <span className="text-accent">R$19,90!</span>
+          <h2 className="text-3xl font-bold text-foreground mb-8">
+            <span className="text-red-600 line-through mr-2">R$97,90</span>
+            por apenas R$19,90!
           </h2>
         </div>
 
@@ -130,7 +127,7 @@ export function MangaLanding() {
           <div className="flex flex-col justify-center">
             <div className="bg-accent/20 p-6 rounded-lg text-center mb-6">
               <p className="text-lg font-bold text-foreground">
-                🎉 Ao adquirir hoje, você leva tudo isso por apenas R$19,90!
+                🎉 Ao adquirir hoje, você leva tudo isso por apenas <span>R$19,90!</span>
               </p>
             </div>
             <CTAButton size="lg" className="w-full" href="https://pay.kiwify.com.br/i4D9YlE">SIM, QUERO COMEÇAR AGORA</CTAButton>
