@@ -14,7 +14,8 @@ import { activateProtection, handleCheckoutClick } from "@/lib/protection";
 //     activateProtection();
 //   }, []);
 
-  return <div className="min-h-screen bg-background">
+  // return 
+  <div className="min-h-screen bg-background">
     {/* Hero Section */}
     <section className="relative px-4 py-16 bg-gradient-to-br from-background to-card">
       <div className="container mx-auto max-w-6xl">
@@ -227,4 +228,4 @@ import { activateProtection, handleCheckoutClick } from "@/lib/protection";
       </div>
     </footer>
   </div>;
-}
+// }
