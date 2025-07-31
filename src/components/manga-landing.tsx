@@ -77,9 +77,7 @@ export function MangaLanding() {
       {/* Why It Works */}
       <section className="py-16 bg-card">
         <div className="container mx-auto max-w-4xl px-4 text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-8">
-            Por que esse método funciona?
-          </h2>
+          <h2 className="text-3xl font-bold text-foreground mb-8">De R$97,90 por apenas R$19,90!</h2>
           <p className="text-lg text-foreground leading-relaxed">
             Diferente de tutoriais soltos e confusos da internet, aqui você aprende com uma estrutura clara, 
             passo a passo real e um método que respeita o seu tempo e nível de experiência.
