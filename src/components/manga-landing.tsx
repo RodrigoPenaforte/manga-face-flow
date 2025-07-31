@@ -1,13 +1,11 @@
-import { CTAButton } from "@/components/ui/cta-button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Book, Video, Gift, Clock, Shield, MessageCircle } from "lucide-react"
-import heroImage from "@/assets/manga-ebook-hero.jpg"
-import expressionsImage from "@/assets/manga-expressions.jpg"
-
+import { CTAButton } from "@/components/ui/cta-button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, Book, Video, Gift, Clock, Shield, MessageCircle } from "lucide-react";
+import heroImage from "@/assets/manga-ebook-hero.jpg";
+import expressionsImage from "@/assets/manga-expressions.jpg";
 export function MangaLanding() {
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative px-4 py-16 bg-gradient-to-br from-background to-card">
         <div className="container mx-auto max-w-6xl">
@@ -30,11 +28,7 @@ export function MangaLanding() {
               </CTAButton>
             </div>
             <div className="flex justify-center">
-              <img 
-                src={heroImage} 
-                alt="eBook Como Desenhar Rosto Estilo Mangá"
-                className="max-w-full h-auto rounded-lg shadow-2xl"
-              />
+              <img src={heroImage} alt="eBook Como Desenhar Rosto Estilo Mangá" className="max-w-full h-auto rounded-lg shadow-2xl" />
             </div>
           </div>
         </div>
@@ -45,11 +39,7 @@ export function MangaLanding() {
         <div className="container mx-auto max-w-4xl px-4 text-center">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <img 
-                src={expressionsImage} 
-                alt="Exemplos de expressões mangá"
-                className="w-full rounded-lg shadow-lg"
-              />
+              <img src={expressionsImage} alt="Exemplos de expressões mangá" className="w-full rounded-lg shadow-lg" />
             </div>
             <div className="text-left">
               <div className="flex items-center gap-3 mb-4">
@@ -76,19 +66,10 @@ export function MangaLanding() {
             Tudo o que você precisa para dominar os rostos no estilo mangá:
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {[
-              "Proporção certa de rostos femininos e masculinos",
-              "Como desenhar olhos, nariz, boca e cabelo no estilo japonês",
-              "Expressões faciais: raiva, alegria, surpresa, tristeza",
-              "Diferentes ângulos do rosto (frente, perfil, ¾)",
-              "Técnica de Loomis (bônus incluído!)",
-              "E muito mais..."
-            ].map((item, index) => (
-              <div key={index} className="flex items-start gap-3">
+            {["Proporção certa de rostos femininos e masculinos", "Como desenhar olhos, nariz, boca e cabelo no estilo japonês", "Expressões faciais: raiva, alegria, surpresa, tristeza", "Diferentes ângulos do rosto (frente, perfil, ¾)", "Técnica de Loomis (bônus incluído!)", "E muito mais..."].map((item, index) => <div key={index} className="flex items-start gap-3">
                 <CheckCircle className="w-6 h-6 text-accent mt-1 flex-shrink-0" />
                 <span className="text-foreground">{item}</span>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -139,7 +120,7 @@ export function MangaLanding() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-4 h-4 bg-accent rounded-sm"></div>
-                    <span>Bônus #3: Aula extra de expressões e variações</span>
+                    <span>Bônus #3: Como desenhar corpo estilo mangá</span>
                   </div>
                 </div>
               </CardContent>
@@ -151,9 +132,7 @@ export function MangaLanding() {
                   🎉 Ao adquirir hoje, você leva tudo isso por apenas R$19,90!
                 </p>
               </div>
-              <CTAButton size="lg" className="w-full" href="https://pay.kiwify.com.br/i4D9YlE">
-                SIM, QUERO COMEÇAR AGORA POR R$19,90
-              </CTAButton>
+              <CTAButton size="lg" className="w-full" href="https://pay.kiwify.com.br/i4D9YlE">SIM, QUERO COMEÇAR AGORA</CTAButton>
             </div>
           </div>
         </div>
@@ -170,8 +149,8 @@ export function MangaLanding() {
             </div>
             <div className="flex flex-col items-center">
               <MessageCircle className="w-12 h-12 text-accent mb-4" />
-              <h3 className="font-bold text-foreground mb-2">Acesso Imediato</h3>
-              <p className="text-muted-foreground">Você recebe o material imediatamente no seu e-mail.</p>
+              <h3 className="font-bold text-foreground mb-2">Acesso Imediato e Vitalício</h3>
+              <p className="text-muted-foreground">Você recebe imediatamente por e-mail, com acesso à área de membros, e o curso é seu para sempre.</p>
             </div>
             <div className="flex flex-col items-center">
               <Shield className="w-12 h-12 text-accent mb-4" />
@@ -188,9 +167,7 @@ export function MangaLanding() {
           <h2 className="text-3xl font-bold text-foreground mb-8">
             Comece a desenhar rostos incríveis hoje mesmo!
           </h2>
-          <CTAButton size="lg" className="mb-8" href="https://pay.kiwify.com.br/i4D9YlE">
-            SIM, QUERO COMEÇAR AGORA POR R$19,90
-          </CTAButton>
+          <CTAButton size="lg" className="mb-8" href="https://pay.kiwify.com.br/i4D9YlE">SIM, QUERO COMEÇAR AGORA</CTAButton>
         </div>
       </section>
 
@@ -217,6 +194,5 @@ export function MangaLanding() {
           </div>
         </div>
       </footer>
-    </div>
-  )
+    </div>;
 }
