@@ -25,7 +25,7 @@ export function MangaLanding() {
               <p className="text-lg text-foreground mb-8">
                 Com um método simples e comprovado, você vai aprender a criar personagens no estilo japonês, com traços profissionais e expressivos!
               </p>
-              <CTAButton size="lg" className="w-full lg:w-auto">
+              <CTAButton size="lg" className="w-full lg:w-auto" href="https://pay.kiwify.com.br/i4D9YlE">
                 Quero Aprender Agora por R$19,90
               </CTAButton>
             </div>
@@ -151,7 +151,7 @@ export function MangaLanding() {
                   🎉 Ao adquirir hoje, você leva tudo isso por apenas R$19,90!
                 </p>
               </div>
-              <CTAButton size="lg" className="w-full">
+              <CTAButton size="lg" className="w-full" href="https://pay.kiwify.com.br/i4D9YlE">
                 SIM, QUERO COMEÇAR AGORA POR R$19,90
               </CTAButton>
             </div>
@@ -188,7 +188,7 @@ export function MangaLanding() {
           <h2 className="text-3xl font-bold text-foreground mb-8">
             Comece a desenhar rostos incríveis hoje mesmo!
           </h2>
-          <CTAButton size="lg" className="mb-8">
+          <CTAButton size="lg" className="mb-8" href="https://pay.kiwify.com.br/i4D9YlE">
             SIM, QUERO COMEÇAR AGORA POR R$19,90
           </CTAButton>
         </div>
