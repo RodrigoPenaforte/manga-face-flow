@@ -165,7 +165,7 @@ export function MangaLanding() {
         <h2 className="text-3xl font-bold text-foreground mb-8">
           Comece a desenhar rostos incríveis hoje mesmo!
         </h2>
-        <CTAButton size="lg" className="mb-8" href="https://pay.kiwify.com.br/i4D9YlE">SIM, QUERO COMEÇAR AGORA</CTAButton>
+        <CTAButton size="lg" className="mb-8" href="https://pay.kiwify.com.br/i4D9YlE">SIM, QUERO COMEÇAR AGORAAAAAAAAAAAAA</CTAButton>
       </div>
     </section>
 
