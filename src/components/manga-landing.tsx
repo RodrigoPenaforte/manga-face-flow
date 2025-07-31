@@ -8,11 +8,11 @@ import expressionsImage from "@/assets/manga-expression-ebook.png";
 import { useEffect } from "react";
 import { activateProtection, handleCheckoutClick } from "@/lib/protection";
 
-export function MangaLanding() {
-  useEffect(() => {
-    // Ativa todas as proteções contra clonagem
-    activateProtection();
-  }, []);
+// export function MangaLanding() {
+//   useEffect(() => {
+//     // Ativa todas as proteções contra clonagem
+//     activateProtection();
+//   }, []);
 
   return <div className="min-h-screen bg-background">
     {/* Hero Section */}
