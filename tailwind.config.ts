@@ -52,6 +52,14 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Custom manga landing page colors
+				manga: {
+					bg: 'hsl(var(--manga-bg))',
+					title: 'hsl(var(--manga-title))',
+					cta: 'hsl(var(--manga-cta))',
+					white: 'hsl(var(--manga-white))',
+					separator: 'hsl(var(--manga-separator))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
