@@ -229,7 +229,7 @@ export function MangaLanding() {
         {/* Estatísticas */}
         <div className="grid md:grid-cols-4 gap-6 text-center">
           <div className="bg-accent/10 p-6 rounded-lg">
-            <div className="text-3xl font-bold text-accent mb-2">2.500+</div>
+            <div className="text-3xl font-bold text-accent mb-2">300+</div>
             <div className="text-sm text-muted-foreground">Alunos Satisfeitos</div>
           </div>
           <div className="bg-accent/10 p-6 rounded-lg">
