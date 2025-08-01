@@ -1,5 +1,5 @@
 
-Esse meu projeto eu fiz com as linguagens
+Esse meu projeto eu fiz com as linguagens e libs
 - Vite
 - TypeScript
 - React
