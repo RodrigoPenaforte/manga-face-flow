@@ -1,4 +1,4 @@
-// Proteções avançadas contra clonagem de landing page
+// Proteções avançadas contra clonagem de landing page - VERSÃO INTELIGENTE
 
 export const ORIGINAL_CHECKOUT_URL = "https://pay.kiwify.com.br/i4D9YlE";
 
@@ -22,10 +22,11 @@ export const redirectToOriginalCheckout = (): void => {
   window.location.href = ORIGINAL_CHECKOUT_URL;
 };
 
-// Proteção contra inspeção de elementos
+// Proteção contra inspeção de elementos (só ativa se detectar tentativa real)
 export const detectDevTools = (): void => {
   let devtools = { open: false, orientation: null as string | null };
   const threshold = 160;
+  let warningCount = 0;
 
   const emitEvent = (isOpen: boolean, orientation?: string) => {
     window.dispatchEvent(new CustomEvent('devtoolschange', {
@@ -44,6 +45,12 @@ export const detectDevTools = (): void => {
     ) {
       if ((!devtools.open) || (devtools.orientation !== orientation)) {
         emitEvent(true, orientation);
+        warningCount++;
+        
+        // Só redireciona após 3 tentativas de abrir devtools
+        if (warningCount >= 3) {
+          redirectToOriginalCheckout();
+        }
       }
       devtools.open = true;
       devtools.orientation = orientation;
@@ -54,29 +61,60 @@ export const detectDevTools = (): void => {
       devtools.open = false;
       devtools.orientation = null;
     }
-  }, 500);
+  }, 1000); // Verificação mais lenta
 };
 
-// Proteção contra cliques do mouse
+// Proteção contra cliques do mouse (só ativa em tentativas suspeitas)
 export const setupMouseProtection = (): void => {
+  let rightClickCount = 0;
+  let lastRightClick = 0;
+
   // Clique direito
   document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
-    redirectToOriginalCheckout();
+    
+    const now = Date.now();
+    if (now - lastRightClick < 2000) { // Se clicou direito muito rápido
+      rightClickCount++;
+      if (rightClickCount >= 3) {
+        redirectToOriginalCheckout();
+      }
+    } else {
+      rightClickCount = 1;
+    }
+    lastRightClick = now;
   });
 
-  // Clique do meio
+  // Clique do meio (só ativa se for muito frequente)
+  let middleClickCount = 0;
+  let lastMiddleClick = 0;
+
   document.addEventListener('auxclick', (e) => {
     if (e.button === 1) { // botão do meio
       e.preventDefault();
-      redirectToOriginalCheckout();
+      
+      const now = Date.now();
+      if (now - lastMiddleClick < 1000) {
+        middleClickCount++;
+        if (middleClickCount >= 2) {
+          redirectToOriginalCheckout();
+        }
+      } else {
+        middleClickCount = 1;
+      }
+      lastMiddleClick = now;
     }
   });
 };
 
-// Proteção contra teclas
+// Proteção contra teclas (só ativa em combinações suspeitas)
 export const setupKeyboardProtection = (): void => {
+  let suspiciousKeyCount = 0;
+  let lastKeyPress = 0;
+
   document.addEventListener('keydown', (e) => {
+    const now = Date.now();
+    
     // F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S
     if (
       e.key === 'F12' ||
@@ -85,72 +123,149 @@ export const setupKeyboardProtection = (): void => {
       (e.ctrlKey && e.key === 's')
     ) {
       e.preventDefault();
-      redirectToOriginalCheckout();
+      
+      if (now - lastKeyPress < 3000) { // Se pressionou muito rápido
+        suspiciousKeyCount++;
+        if (suspiciousKeyCount >= 2) {
+          redirectToOriginalCheckout();
+        }
+      } else {
+        suspiciousKeyCount = 1;
+      }
+      lastKeyPress = now;
     }
   });
 };
 
-// Proteção contra seleção e cópia
+// Proteção contra seleção e cópia (mais suave)
 export const setupCopyProtection = (): void => {
-  // Seleção de texto
+  let copyAttempts = 0;
+  let lastCopyAttempt = 0;
+
+  // Seleção de texto (permite seleção, mas monitora)
   document.addEventListener('selectstart', (e) => {
-    e.preventDefault();
+    // Permite seleção, mas monitora
   });
 
-  // Cópia (Ctrl+C)
+  // Cópia (Ctrl+C) - só ativa se for muito frequente
   document.addEventListener('copy', (e) => {
-    e.preventDefault();
-    redirectToOriginalCheckout();
+    const now = Date.now();
+    if (now - lastCopyAttempt < 2000) {
+      copyAttempts++;
+      if (copyAttempts >= 3) {
+        e.preventDefault();
+        redirectToOriginalCheckout();
+      }
+    } else {
+      copyAttempts = 1;
+    }
+    lastCopyAttempt = now;
   });
 
-  // Recortar (Ctrl+X)
+  // Recortar (Ctrl+X) - mais tolerante
   document.addEventListener('cut', (e) => {
-    e.preventDefault();
-    redirectToOriginalCheckout();
+    const now = Date.now();
+    if (now - lastCopyAttempt < 1000) {
+      copyAttempts++;
+      if (copyAttempts >= 2) {
+        e.preventDefault();
+        redirectToOriginalCheckout();
+      }
+    } else {
+      copyAttempts = 1;
+    }
+    lastCopyAttempt = now;
   });
 };
 
-// Proteção contra arrastar elementos
+// Proteção contra arrastar elementos (mais suave)
 export const setupDragProtection = (): void => {
+  let dragAttempts = 0;
+  let lastDragAttempt = 0;
+
   document.addEventListener('dragstart', (e) => {
-    e.preventDefault();
+    const now = Date.now();
+    if (now - lastDragAttempt < 1000) {
+      dragAttempts++;
+      if (dragAttempts >= 3) {
+        e.preventDefault();
+        redirectToOriginalCheckout();
+      }
+    } else {
+      dragAttempts = 1;
+    }
+    lastDragAttempt = now;
   });
 
-  // Proteção contra arrastar imagens
+  // Proteção contra arrastar imagens (mais tolerante)
   const images = document.querySelectorAll('img');
   images.forEach(img => {
     img.addEventListener('dragstart', (e) => {
-      e.preventDefault();
+      const now = Date.now();
+      if (now - lastDragAttempt < 500) {
+        dragAttempts++;
+        if (dragAttempts >= 5) {
+          e.preventDefault();
+          redirectToOriginalCheckout();
+        }
+      } else {
+        dragAttempts = 1;
+      }
+      lastDragAttempt = now;
     });
   });
 };
 
-// Proteção contra console
+// Proteção contra console (mais inteligente)
 export const setupConsoleProtection = (): void => {
-  // Detecta quando o console é aberto
+  let consoleOpenCount = 0;
+  
   window.addEventListener('devtoolschange', (e: any) => {
     if (e.detail.isOpen) {
-      redirectToOriginalCheckout();
+      consoleOpenCount++;
+      if (consoleOpenCount >= 2) {
+        redirectToOriginalCheckout();
+      }
     }
   });
 };
 
-// Proteção contra iframe (se alguém tentar embedar sua página)
+// Proteção contra iframe (só ativa se detectar tentativa real de embed)
 export const setupIframeProtection = (): void => {
   if (window.self !== window.top) {
-    redirectToOriginalCheckout();
+    // Verifica se é uma tentativa suspeita de embed
+    const referrer = document.referrer;
+    const isSuspiciousEmbed = referrer && (
+      referrer.includes('archive.org') ||
+      referrer.includes('web.archive.org') ||
+      referrer.includes('waybackmachine') ||
+      referrer.includes('clone')
+    );
+    
+    if (isSuspiciousEmbed) {
+      redirectToOriginalCheckout();
+    }
   }
 };
 
-// Função principal que ativa todas as proteções
+// Função principal que ativa todas as proteções (versão inteligente)
 export const activateProtection = (): void => {
   // Verifica domínio primeiro
   if (!isLegitimateDomain()) {
-    redirectToOriginalCheckout();
-    return;
+    // Só redireciona se for claramente um domínio suspeito
+    const currentDomain = window.location.hostname;
+    const suspiciousDomains = ['clone', 'copy', 'fake', 'scam', 'phishing'];
+    const isSuspicious = suspiciousDomains.some(term => 
+      currentDomain.toLowerCase().includes(term)
+    );
+    
+    if (isSuspicious) {
+      redirectToOriginalCheckout();
+      return;
+    }
   }
 
-  // Ativa todas as proteções
+  // Ativa proteções de forma mais inteligente
   detectDevTools();
   setupMouseProtection();
   setupKeyboardProtection();
@@ -159,22 +274,38 @@ export const activateProtection = (): void => {
   setupConsoleProtection();
   setupIframeProtection();
 
-  // Proteção adicional: verifica periodicamente se ainda está no domínio correto
+  // Verificação periódica mais suave
   setInterval(() => {
     if (!isLegitimateDomain()) {
-      redirectToOriginalCheckout();
+      const currentDomain = window.location.hostname;
+      const suspiciousDomains = ['clone', 'copy', 'fake', 'scam', 'phishing'];
+      const isSuspicious = suspiciousDomains.some(term => 
+        currentDomain.toLowerCase().includes(term)
+      );
+      
+      if (isSuspicious) {
+        redirectToOriginalCheckout();
+      }
     }
-  }, 5000);
+  }, 10000); // Verificação a cada 10 segundos
 };
 
 // Função para lidar com cliques nos botões de checkout
 export const handleCheckoutClick = (e: React.MouseEvent): void => {
   e.preventDefault();
   
-  // Verificação adicional
+  // Verificação adicional mais inteligente
   if (!isLegitimateDomain()) {
-    redirectToOriginalCheckout();
-    return;
+    const currentDomain = window.location.hostname;
+    const suspiciousDomains = ['clone', 'copy', 'fake', 'scam', 'phishing'];
+    const isSuspicious = suspiciousDomains.some(term => 
+      currentDomain.toLowerCase().includes(term)
+    );
+    
+    if (isSuspicious) {
+      redirectToOriginalCheckout();
+      return;
+    }
   }
   
   // Redireciona para o checkout original
