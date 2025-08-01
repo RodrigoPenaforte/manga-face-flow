@@ -22,11 +22,10 @@ export const redirectToOriginalCheckout = (): void => {
   window.location.href = ORIGINAL_CHECKOUT_URL;
 };
 
-// Proteção contra inspeção de elementos (só ativa se detectar tentativa real)
+// Proteção contra inspeção de elementos (bloqueia completamente)
 export const detectDevTools = (): void => {
   let devtools = { open: false, orientation: null as string | null };
   const threshold = 160;
-  let warningCount = 0;
 
   const emitEvent = (isOpen: boolean, orientation?: string) => {
     window.dispatchEvent(new CustomEvent('devtoolschange', {
@@ -45,12 +44,8 @@ export const detectDevTools = (): void => {
     ) {
       if ((!devtools.open) || (devtools.orientation !== orientation)) {
         emitEvent(true, orientation);
-        warningCount++;
-        
-        // Só redireciona após 3 tentativas de abrir devtools
-        if (warningCount >= 3) {
-          redirectToOriginalCheckout();
-        }
+        // Detecta mas não redireciona, apenas registra
+        console.log('DevTools detectado - Proteção ativa');
       }
       devtools.open = true;
       devtools.orientation = orientation;
@@ -61,171 +56,126 @@ export const detectDevTools = (): void => {
       devtools.open = false;
       devtools.orientation = null;
     }
-  }, 1000); // Verificação mais lenta
+  }, 1000);
 };
 
-// Proteção contra cliques do mouse (só ativa em tentativas suspeitas)
+// Proteção contra cliques do mouse (bloqueia completamente)
 export const setupMouseProtection = (): void => {
-  let rightClickCount = 0;
-  let lastRightClick = 0;
-
-  // Clique direito
+  // Bloqueia clique direito
   document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
-    
-    const now = Date.now();
-    if (now - lastRightClick < 2000) { // Se clicou direito muito rápido
-      rightClickCount++;
-      if (rightClickCount >= 3) {
-        redirectToOriginalCheckout();
-      }
-    } else {
-      rightClickCount = 1;
-    }
-    lastRightClick = now;
+    return false;
   });
 
-  // Clique do meio (só ativa se for muito frequente)
-  let middleClickCount = 0;
-  let lastMiddleClick = 0;
-
+  // Bloqueia clique do meio
   document.addEventListener('auxclick', (e) => {
     if (e.button === 1) { // botão do meio
       e.preventDefault();
-      
-      const now = Date.now();
-      if (now - lastMiddleClick < 1000) {
-        middleClickCount++;
-        if (middleClickCount >= 2) {
-          redirectToOriginalCheckout();
-        }
-      } else {
-        middleClickCount = 1;
-      }
-      lastMiddleClick = now;
+      return false;
     }
   });
 };
 
-// Proteção contra teclas (só ativa em combinações suspeitas)
+// Proteção contra teclas (bloqueia completamente)
 export const setupKeyboardProtection = (): void => {
-  let suspiciousKeyCount = 0;
-  let lastKeyPress = 0;
-
   document.addEventListener('keydown', (e) => {
-    const now = Date.now();
-    
-    // F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S
+    // F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S, Ctrl+A
     if (
       e.key === 'F12' ||
       (e.ctrlKey && e.shiftKey && e.key === 'I') ||
       (e.ctrlKey && e.key === 'u') ||
-      (e.ctrlKey && e.key === 's')
+      (e.ctrlKey && e.key === 's') ||
+      (e.ctrlKey && e.key === 'a')
     ) {
       e.preventDefault();
-      
-      if (now - lastKeyPress < 3000) { // Se pressionou muito rápido
-        suspiciousKeyCount++;
-        if (suspiciousKeyCount >= 2) {
-          redirectToOriginalCheckout();
-        }
-      } else {
-        suspiciousKeyCount = 1;
-      }
-      lastKeyPress = now;
+      return false;
     }
   });
 };
 
-// Proteção contra seleção e cópia (mais suave)
+// Proteção contra seleção e cópia (bloqueia completamente)
 export const setupCopyProtection = (): void => {
-  let copyAttempts = 0;
-  let lastCopyAttempt = 0;
-
-  // Seleção de texto (permite seleção, mas monitora)
+  // Bloqueia seleção de texto
   document.addEventListener('selectstart', (e) => {
-    // Permite seleção, mas monitora
+    e.preventDefault();
+    return false;
   });
 
-  // Cópia (Ctrl+C) - só ativa se for muito frequente
+  // Bloqueia cópia (Ctrl+C)
   document.addEventListener('copy', (e) => {
-    const now = Date.now();
-    if (now - lastCopyAttempt < 2000) {
-      copyAttempts++;
-      if (copyAttempts >= 3) {
-        e.preventDefault();
-        redirectToOriginalCheckout();
-      }
-    } else {
-      copyAttempts = 1;
-    }
-    lastCopyAttempt = now;
+    e.preventDefault();
+    return false;
   });
 
-  // Recortar (Ctrl+X) - mais tolerante
+  // Bloqueia recortar (Ctrl+X)
   document.addEventListener('cut', (e) => {
-    const now = Date.now();
-    if (now - lastCopyAttempt < 1000) {
-      copyAttempts++;
-      if (copyAttempts >= 2) {
-        e.preventDefault();
-        redirectToOriginalCheckout();
-      }
-    } else {
-      copyAttempts = 1;
+    e.preventDefault();
+    return false;
+  });
+
+  // Bloqueia colar (Ctrl+V) - opcional
+  document.addEventListener('paste', (e) => {
+    e.preventDefault();
+    return false;
+  });
+
+  // Bloqueia clique direito (menu de contexto)
+  document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    return false;
+  });
+
+  // Bloqueia teclas de atalho de cópia
+  document.addEventListener('keydown', (e) => {
+    // Ctrl+C, Ctrl+X, Ctrl+V, Ctrl+A
+    if (
+      (e.ctrlKey && e.key === 'c') ||
+      (e.ctrlKey && e.key === 'x') ||
+      (e.ctrlKey && e.key === 'v') ||
+      (e.ctrlKey && e.key === 'a')
+    ) {
+      e.preventDefault();
+      return false;
     }
-    lastCopyAttempt = now;
   });
 };
 
-// Proteção contra arrastar elementos (mais suave)
+// Proteção contra arrastar elementos (bloqueia completamente)
 export const setupDragProtection = (): void => {
-  let dragAttempts = 0;
-  let lastDragAttempt = 0;
-
+  // Bloqueia arrastar qualquer elemento
   document.addEventListener('dragstart', (e) => {
-    const now = Date.now();
-    if (now - lastDragAttempt < 1000) {
-      dragAttempts++;
-      if (dragAttempts >= 3) {
-        e.preventDefault();
-        redirectToOriginalCheckout();
-      }
-    } else {
-      dragAttempts = 1;
-    }
-    lastDragAttempt = now;
+    e.preventDefault();
+    return false;
   });
 
-  // Proteção contra arrastar imagens (mais tolerante)
+  // Bloqueia arrastar imagens especificamente
   const images = document.querySelectorAll('img');
   images.forEach(img => {
     img.addEventListener('dragstart', (e) => {
-      const now = Date.now();
-      if (now - lastDragAttempt < 500) {
-        dragAttempts++;
-        if (dragAttempts >= 5) {
-          e.preventDefault();
-          redirectToOriginalCheckout();
-        }
-      } else {
-        dragAttempts = 1;
-      }
-      lastDragAttempt = now;
+      e.preventDefault();
+      return false;
     });
+    
+    // Remove atributo draggable se existir
+    img.setAttribute('draggable', 'false');
+  });
+
+  // Bloqueia arrastar textos
+  document.addEventListener('mousedown', (e) => {
+    if (e.target instanceof HTMLElement) {
+      e.target.style.userSelect = 'none';
+      e.target.style.webkitUserSelect = 'none';
+    }
   });
 };
 
-// Proteção contra console (mais inteligente)
+// Proteção contra console (bloqueia completamente)
 export const setupConsoleProtection = (): void => {
-  let consoleOpenCount = 0;
-  
+  // Detecta quando o console é aberto e mostra aviso
   window.addEventListener('devtoolschange', (e: any) => {
     if (e.detail.isOpen) {
-      consoleOpenCount++;
-      if (consoleOpenCount >= 2) {
-        redirectToOriginalCheckout();
-      }
+      // Pode mostrar um aviso ou fazer alguma ação, mas não redireciona
+      console.log('Acesso ao console detectado - Proteção ativa');
     }
   });
 };
@@ -248,11 +198,10 @@ export const setupIframeProtection = (): void => {
   }
 };
 
-// Função principal que ativa todas as proteções (versão inteligente)
+// Função principal que ativa todas as proteções (versão bloqueadora)
 export const activateProtection = (): void => {
-  // Verifica domínio primeiro
+  // Verifica domínio primeiro - só redireciona se for claramente suspeito
   if (!isLegitimateDomain()) {
-    // Só redireciona se for claramente um domínio suspeito
     const currentDomain = window.location.hostname;
     const suspiciousDomains = ['clone', 'copy', 'fake', 'scam', 'phishing'];
     const isSuspicious = suspiciousDomains.some(term => 
@@ -265,7 +214,7 @@ export const activateProtection = (): void => {
     }
   }
 
-  // Ativa proteções de forma mais inteligente
+  // Ativa todas as proteções de bloqueio
   detectDevTools();
   setupMouseProtection();
   setupKeyboardProtection();
@@ -274,7 +223,7 @@ export const activateProtection = (): void => {
   setupConsoleProtection();
   setupIframeProtection();
 
-  // Verificação periódica mais suave
+  // Verificação periódica de domínio suspeito
   setInterval(() => {
     if (!isLegitimateDomain()) {
       const currentDomain = window.location.hostname;
@@ -287,7 +236,7 @@ export const activateProtection = (): void => {
         redirectToOriginalCheckout();
       }
     }
-  }, 10000); // Verificação a cada 10 segundos
+  }, 10000);
 };
 
 // Função para lidar com cliques nos botões de checkout

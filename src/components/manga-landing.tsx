@@ -12,7 +12,7 @@ export function MangaLanding() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   useEffect(() => {
-    // Ativa todas as proteções contra clonagem (versão inteligente)
+    // Ativa todas as proteções contra clonagem (versão bloqueadora)
     activateProtection();
 
     // Carrossel automático de depoimentos
