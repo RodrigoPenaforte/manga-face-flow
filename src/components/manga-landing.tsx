@@ -46,7 +46,7 @@ export function MangaLanding() {
             <img src={heroImage} alt="eBook Como Desenhar Rosto Estilo Mangá" className="max-w-full h-auto rounded-lg shadow-2xl" />
           </div>
           <CTAButton size="lg" className="w-full lg:w-auto" onClick={handleCheckoutClick}>
-            Quero Aprender Agora 😍
+            Quero Aprender Agora
           </CTAButton>
         </div>
       </div>
