@@ -5,25 +5,148 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { CheckCircle, Book, Video, Gift, Clock, Shield, MessageCircle, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import heroImage from "@/assets/manga-ebook-hero.jpg";
 import expressionsImage from "@/assets/manga-expression-ebook.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { activateProtection, handleCheckoutClick } from "@/lib/protection";
-
 export function MangaLanding() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const testimonials = [
+    {
+      name: "Maria Silva",
+      role: "Via Instagram",
+      avatar: "M",
+      gradient: "from-pink-400 to-purple-500",
+      text: "Gente, sério mesmo! Nunca pensei que conseguiria desenhar rostos assim! O método é demais, cada passo bem explicadinho. Em 2 semanas já tava desenhando muito melhor! 😍"
+    },
+    {
+      name: "Lucas Santos",
+      role: "Via WhatsApp",
+      avatar: "L",
+      gradient: "from-blue-400 to-cyan-500",
+      text: "Cara, sempre quis desenhar mangá mas não tinha ideia de como começar. Esse curso simplesmente mudou minha vida! Agora consigo criar personagens completos com expressões incríveis."
+    },
+    {
+      name: "Ana Costa",
+      role: "Via WhatsApp",
+      avatar: "A",
+      gradient: "from-green-400 to-emerald-500",
+      text: "Muito bom mesmo! O método é bem simples e funciona mesmo. A técnica de Loomis explicada assim ficou super fácil de entender. Recomendo demais!"
+    },
+    {
+      name: "Pedro Oliveira",
+      role: "Via WhatsApp",
+      avatar: "P",
+      gradient: "from-orange-400 to-red-500",
+      text: "O eBook é fantástico! As aulas são super divertidas, o professor mistura comédia com animação. Nunca imaginei que aprender a desenhar rostos pudesse ser tão engraçado!"
+    },
+    {
+      name: "Camila Ferreira",
+      role: "Via Facebook",
+      avatar: "C",
+      gradient: "from-purple-400 to-pink-500",
+      text: "As aulas em vídeo são incríveis! O jeito que ele explica com animações e piadas torna tudo muito mais fácil de entender. O eBook complementa perfeitamente!"
+    },
+    {
+      name: "Rafael Costa",
+      role: "Via Facebook",
+      avatar: "R",
+      gradient: "from-teal-400 to-blue-500",
+      text: "Melhor investimento que fiz! O eBook tem tudo que preciso e as aulas são hilárias. Aprendi mais em 1 semana do que em meses tentando sozinho!"
+    },
+    {
+      name: "Juliana Santos",
+      role: "Via Instagram",
+      avatar: "J",
+      gradient: "from-indigo-400 to-purple-500",
+      text: "Adorei como o curso mistura técnica com diversão! As animações nas aulas tornam tudo muito visual e as piadas do professor fazem o tempo voar!"
+    },
+    {
+      name: "Diego Almeida",
+      role: "Via Instagram",
+      avatar: "D",
+      gradient: "from-yellow-400 to-orange-500",
+      text: "O eBook é completo demais! E as aulas em vídeo são uma experiência única. Nunca ri tanto enquanto aprendia algo tão técnico. Recomendo muito!"
+    }
+  ];
 
+  // Touch/swipe robusto
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
+  const touchEndX = useRef(null);
+  const touchEndY = useRef(null);
+  const autoInterval = useRef(null);
+
+  // Quantos depoimentos por vez (1 mobile, 3 desktop)
+  const [perPage, setPerPage] = useState(1);
   useEffect(() => {
-    // Ativa todas as proteções contra clonagem (versão bloqueadora)
-    activateProtection();
-
-    // Carrossel automático de depoimentos
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % 6);
-    }, 5000);
-
-    return () => clearInterval(interval);
+    function handleResize() {
+      setPerPage(window.innerWidth >= 768 ? 3 : 1);
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return <div className="min-h-screen bg-background">
+  useEffect(() => {
+    activateProtection();
+    autoInterval.current = setInterval(() => {
+      setCurrentTestimonial((prev) => {
+        // Limite para não passar do último grupo visível
+        const maxIndex = Math.max(0, testimonials.length - perPage);
+        return prev >= maxIndex ? 0 : prev + 1;
+      });
+    }, 5000);
+    return () => clearInterval(autoInterval.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [perPage]);
+
+  // Funções de swipe
+  function handleTouchStart(e) {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    touchEndX.current = null;
+    touchEndY.current = null;
+    if (autoInterval.current) clearInterval(autoInterval.current);
+  }
+  function handleTouchMove(e) {
+    touchEndX.current = e.touches[0].clientX;
+    touchEndY.current = e.touches[0].clientY;
+  }
+  function handleTouchEnd() {
+    if (
+      touchStartX.current === null ||
+      touchEndX.current === null ||
+      touchStartY.current === null ||
+      touchEndY.current === null
+    ) return;
+    const deltaX = touchStartX.current - touchEndX.current;
+    const deltaY = touchStartY.current - touchEndY.current;
+    const minSwipeDistance = 50;
+    const maxIndex = Math.max(0, testimonials.length - perPage);
+    // Só considera swipe se o movimento horizontal for maior que o vertical
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+      if (deltaX > 0) {
+        // Swipe para esquerda (próximo)
+        setCurrentTestimonial((prev) => (prev < maxIndex ? prev + 1 : prev));
+      } else {
+        // Swipe para direita (anterior)
+        setCurrentTestimonial((prev) => (prev > 0 ? prev - 1 : prev));
+      }
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+    touchStartY.current = null;
+    touchEndY.current = null;
+    // Reinicia o carrossel automático
+    autoInterval.current = setInterval(() => {
+      setCurrentTestimonial((prev) => {
+        const maxIndex = Math.max(0, testimonials.length - perPage);
+        return prev >= maxIndex ? 0 : prev + 1;
+      });
+    }, 5000);
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
     {/* Hero Section */}
     <section className="relative px-4 py-16 bg-gradient-to-br from-background to-card">
       <div className="container mx-auto max-w-6xl">
@@ -121,98 +244,54 @@ export function MangaLanding() {
 
         {/* Carrossel de Depoimentos */}
         <div className="relative mb-8">
-          <div className="flex overflow-hidden">
-            {[
-              {
-                name: "Maria Silva",
-                role: "Via Instagram",
-                avatar: "M",
-                gradient: "from-pink-400 to-purple-500",
-                text: "Gente, sério mesmo! Nunca pensei que conseguiria desenhar rostos assim! O método é demais, cada passo bem explicadinho. Em 2 semanas já tava desenhando muito melhor! 😍"
-              },
-              {
-                name: "Lucas Santos",
-                role: "Via WhatsApp",
-                avatar: "L",
-                gradient: "from-blue-400 to-cyan-500",
-                text: "Cara, sempre quis desenhar mangá mas não tinha ideia de como começar. Esse curso simplesmente mudou minha vida! Agora consigo criar personagens completos com expressões incríveis."
-              },
-              {
-                name: "Ana Costa",
-                role: "Via WhatsApp",
-                avatar: "A",
-                gradient: "from-green-400 to-emerald-500",
-                text: "Muito bom mesmo! O método é bem simples e funciona mesmo. A técnica de Loomis explicada assim ficou super fácil de entender. Recomendo demais!"
-              },
-              {
-                name: "Pedro Oliveira",
-                role: "Via WhatsApp",
-                avatar: "P",
-                gradient: "from-orange-400 to-red-500",
-                text: "O eBook é fantástico! As aulas são super divertidas, o professor mistura comédia com animação. Nunca imaginei que aprender a desenhar rostos pudesse ser tão engraçado!"
-              },
-              {
-                name: "Camila Ferreira",
-                role: "Via Facebook",
-                avatar: "C",
-                gradient: "from-purple-400 to-pink-500",
-                text: "As aulas em vídeo são incríveis! O jeito que ele explica com animações e piadas torna tudo muito mais fácil de entender. O eBook complementa perfeitamente!"
-              },
-              {
-                name: "Rafael Costa",
-                role: "Via Facebook",
-                avatar: "R",
-                gradient: "from-teal-400 to-blue-500",
-                text: "Melhor investimento que fiz! O eBook tem tudo que preciso e as aulas são hilárias. Aprendi mais em 1 semana do que em meses tentando sozinho!"
-              },
-              {
-                name: "Juliana Santos",
-                role: "Via Instagram",
-                avatar: "J",
-                gradient: "from-indigo-400 to-purple-500",
-                text: "Adorei como o curso mistura técnica com diversão! As animações nas aulas tornam tudo muito visual e as piadas do professor fazem o tempo voar!"
-              },
-              {
-                name: "Diego Almeida",
-                role: "Via Instagram",
-                avatar: "D",
-                gradient: "from-yellow-400 to-orange-500",
-                text: "O eBook é completo demais! E as aulas em vídeo são uma experiência única. Nunca ri tanto enquanto aprendia algo tão técnico. Recomendo muito!"
-              }
-            ].map((testimonial, index) => (
-              <div
-                key={index}
-                className={`w-full md:w-1/3 flex-shrink-0 transition-transform duration-500 ease-in-out`}
-                style={{ transform: `translateX(-${currentTestimonial * 33.333}%)` }}
-              >
-                <Card className="border-2 border-accent/20 hover:border-accent/40 transition-all duration-300 hover:shadow-lg mx-2">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-2 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-foreground mb-4 italic">
-                      "{testimonial.text}"
-                    </p>
-                    <div className="flex items-center gap-3">
-                      <div className={`w-12 h-12 bg-gradient-to-br ${testimonial.gradient} rounded-full flex items-center justify-center text-white font-bold text-lg`}>
-                        {testimonial.avatar}
-                      </div>
+          {/* Carrossel responsivo */}
+          <div className="overflow-hidden w-full">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{
+                width: '100%',
+                transform: `translateX(-${currentTestimonial * (100 / perPage)}%)`,
+              }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 w-full md:w-1/3 px-2 box-border"
+                  style={{ maxWidth: perPage === 3 ? `${100 / 3}%` : '100%' }}
+                >
+                  <Card className="border-2 border-accent/20 hover:border-accent/40 transition-all duration-300 hover:shadow-lg h-full">
+                    <CardContent className="p-6 h-full flex flex-col justify-between">
                       <div>
-                        <p className="font-semibold text-foreground">{testimonial.name}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                        <div className="flex items-center gap-2 mb-4">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                        <p className="text-foreground mb-4 italic">
+                          "{testimonial.text}"
+                        </p>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
+                      <div className="flex items-center gap-3 mt-4">
+                        <div className={`w-12 h-12 bg-gradient-to-br ${testimonial.gradient} rounded-full flex items-center justify-center text-white font-bold text-lg`}>
+                          {testimonial.avatar}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-foreground">{testimonial.name}</p>
+                          <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </div>
           </div>
-          
           {/* Navegação do carrossel */}
           <div className="flex justify-center mt-6 gap-2">
-            {[0, 1, 2, 3, 4, 5].map((index) => (
+            {Array.from({ length: Math.max(1, testimonials.length - perPage + 1) }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentTestimonial(index)}
@@ -224,7 +303,7 @@ export function MangaLanding() {
               />
             ))}
           </div>
-        </div>
+          </div>
 
         {/* Estatísticas */}
         <div className="grid md:grid-cols-4 gap-6 text-center">
@@ -354,5 +433,6 @@ export function MangaLanding() {
         </Accordion>
       </div>
     </section>
-  </div>;
+    </div>
+  );
 }
