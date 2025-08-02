@@ -5,6 +5,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { CheckCircle, Book, Video, Gift, Clock, Shield, MessageCircle, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import heroImage from "@/assets/manga-ebook-hero.jpg";
 import expressionsImage from "@/assets/manga-expression-ebook.png";
+import nezukoImage from "@/assets/rostos/nezuko.png";
+import gokuCriancaImage from "@/assets/rostos/goku-crianca.png";
+import sasukeEsbocoImage from "@/assets/rostos/sasuke-esboco.png";
+import thoughtfulAnimeImage from "@/assets/rostos/thoughtful-anime-sketch.png";
+import sungJinWooImage from "@/assets/rostos/sung-jin-woo.png";
+import leviAckermanImage from "@/assets/rostos/levi-ackerman-sketch.png";
 import { useState, useEffect, useRef } from "react";
 import { activateProtection, handleCheckoutClick } from "@/lib/protection";
 
@@ -18,42 +24,42 @@ export function MangaLanding() {
     {
       id: 1,
       name: "Nezuko",
-      image: "/src/assets/rostos/Nezuko.png",
+      image: nezukoImage,
       description: "Expressão inocente e doce",
       bgColor: "bg-artnex-red/20"
     },
     {
       id: 2,
       name: "Goku Criança", 
-      image: "/src/assets/rostos/Goku Criança.png",
+      image: gokuCriancaImage,
       description: "Expressão alegre e inocente",
       bgColor: "bg-artnex-yellow/20"
     },
     {
       id: 3,
       name: "Sasuke Esboço",
-      image: "/src/assets/rostos/Sasuke Esboço.png", 
+      image: sasukeEsbocoImage, 
       description: "Expressão séria e determinada",
       bgColor: "bg-artnex-blue/20"
     },
     {
       id: 4,
       name: "Anime Sketch Pensativo",
-      image: "/src/assets/rostos/20250802_1559_Thoughtful Anime Sketch_remix_01k1p2apnnfdmtgexa1wre646v.png",
+      image: thoughtfulAnimeImage,
       description: "Expressão pensativa e misteriosa",
       bgColor: "bg-artnex-cyan/20"
     },
     {
       id: 5,
       name: "Sung Jin Woo",
-      image: "/src/assets/rostos/Sung Jin Woo.png",
+      image: sungJinWooImage,
       description: "Expressão confiante e focada",
       bgColor: "bg-artnex-orange/20"
     },
     {
       id: 6,
       name: "Levi Ackerman",
-      image: "/src/assets/rostos/Levi Ackerman Sketch.png",
+      image: leviAckermanImage,
       description: "Expressão intensa e séria",
       bgColor: "bg-artnex-royal/20"
     }
