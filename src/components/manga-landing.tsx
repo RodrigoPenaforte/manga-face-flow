@@ -9,6 +9,53 @@ import { useState, useEffect, useRef } from "react";
 import { activateProtection, handleCheckoutClick } from "@/lib/protection";
 export function MangaLanding() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [currentFace, setCurrentFace] = useState(0);
+  
+  // Array de rostos de mangá para o carrossel
+  const mangaFaces = [
+    {
+      id: 1,
+      name: "Nezuko",
+      image: "/src/assets/rostos/Nezuko.png",
+      description: "Expressão inocente e doce",
+      bgColor: "bg-pink-200"
+    },
+    {
+      id: 2,
+      name: "Goku Criança", 
+      image: "/src/assets/rostos/Goku Criança.png",
+      description: "Expressão alegre e inocente",
+      bgColor: "bg-yellow-200"
+    },
+    {
+      id: 3,
+      name: "Sasuke Esboço",
+      image: "/src/assets/rostos/Sasuke Esboço.png", 
+      description: "Expressão séria e determinada",
+      bgColor: "bg-blue-200"
+    },
+    {
+      id: 4,
+      name: "Anime Sketch Pensativo",
+      image: "/src/assets/rostos/20250802_1559_Thoughtful Anime Sketch_remix_01k1p2apnnfdmtgexa1wre646v.png",
+      description: "Expressão pensativa e misteriosa",
+      bgColor: "bg-purple-200"
+    },
+    {
+      id: 5,
+      name: "Sung Jin Woo",
+      image: "/src/assets/rostos/Sung Jin Woo.png",
+      description: "Expressão confiante e focada",
+      bgColor: "bg-green-200"
+    },
+    {
+      id: 6,
+      name: "Levi Ackerman",
+      image: "/src/assets/rostos/Levi Ackerman Sketch.png",
+      description: "Expressão intensa e séria",
+      bgColor: "bg-gray-200"
+    }
+  ];
   const testimonials = [
     {
       name: "Maria Silva",
@@ -99,6 +146,14 @@ export function MangaLanding() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perPage]);
 
+  // Carrossel automático de rostos
+  useEffect(() => {
+    const faceInterval = setInterval(() => {
+      setCurrentFace((prev) => (prev + 1) % mangaFaces.length);
+    }, 3000);
+    return () => clearInterval(faceInterval);
+  }, [mangaFaces.length]);
+
   // Funções de swipe
   function handleTouchStart(e) {
     touchStartX.current = e.touches[0].clientX;
@@ -162,11 +217,54 @@ export function MangaLanding() {
               Mesmo que você nunca tenha desenhado antes
             </p>
             <p className="text-lg text-foreground mb-8">
-              Com um método simples e comprovado, você vai aprender a criar personagens no estilo japonês, com traços profissionais e expressivos!
-            </p>
+            Com um método simples e comprovado, você vai sair do zero em menos de <span className="text-accent font-bold">2 dias</span>. Com <span className="text-black-500 font-bold">aulas em vídeo e um eBook completo</span>, você aprenderá a criar personagens no estilo japonês, com traços profissionais e expressivos!            </p>
           </div>
           <div className="flex justify-center">
-            <img src={heroImage} alt="eBook Como Desenhar Rosto Estilo Mangá" className="max-w-full h-auto rounded-lg shadow-2xl" />
+            <div className="relative w-full max-w-md">
+              {/* Carrossel de Rostos de Mangá */}
+              <div className="rounded-lg shadow-2xl bg-white p-4">
+                <div className="relative">
+                  <img 
+                    src={mangaFaces[currentFace].image} 
+                    alt={mangaFaces[currentFace].name}
+                    className="w-full h-auto rounded-md"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 rounded-b-md">
+                    <p className="text-white text-sm font-medium">{mangaFaces[currentFace].name}</p>
+                    <p className="text-white/80 text-xs">{mangaFaces[currentFace].description}</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Navegação do carrossel */}
+              <div className="flex justify-center mt-4 gap-2">
+                {mangaFaces.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentFace(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentFace 
+                        ? 'bg-accent scale-125' 
+                        : 'bg-accent/30 hover:bg-accent/50'
+                    }`}
+                  />
+                ))}
+              </div>
+              
+              {/* Botões de navegação */}
+              <button
+                onClick={() => setCurrentFace((prev) => (prev - 1 + mangaFaces.length) % mangaFaces.length)}
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-accent p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setCurrentFace((prev) => (prev + 1) % mangaFaces.length)}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-accent p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
           <CTAButton size="lg" className="w-full lg:w-auto" onClick={handleCheckoutClick}>
             Quero Aprender Agora
