@@ -220,32 +220,32 @@ export function MangaLanding() {
             Com um método simples e comprovado, você vai sair do zero em menos de <span className="text-accent font-bold">2 dias</span>. Com <span className="text-black-500 font-bold">aulas em vídeo e um eBook completo</span>, você aprenderá a criar personagens no estilo japonês, com traços profissionais e expressivos!            </p>
           </div>
           <div className="flex justify-center">
-            <div className="relative w-full max-w-md">
+            <div className="relative w-full max-w-lg">
               {/* Carrossel de Rostos de Mangá */}
-              <div className="rounded-lg shadow-2xl bg-white p-4">
-                <div className="relative">
+              <div className="rounded-xl shadow-2xl bg-white overflow-hidden">
+                <div className="relative aspect-[4/5]">
                   <img 
                     src={mangaFaces[currentFace].image} 
                     alt={mangaFaces[currentFace].name}
-                    className="w-full h-auto rounded-md"
+                    className="w-full h-full object-cover transition-all duration-700 ease-in-out"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 rounded-b-md">
-                    <p className="text-white text-sm font-medium">{mangaFaces[currentFace].name}</p>
-                    <p className="text-white/80 text-xs">{mangaFaces[currentFace].description}</p>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
+                    <p className="text-white text-lg font-semibold mb-1 transition-all duration-500">{mangaFaces[currentFace].name}</p>
+                    <p className="text-white/90 text-sm transition-all duration-500">{mangaFaces[currentFace].description}</p>
                   </div>
                 </div>
               </div>
               
               {/* Navegação do carrossel */}
-              <div className="flex justify-center mt-4 gap-2">
+              <div className="flex justify-center mt-6 gap-3">
                 {mangaFaces.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentFace(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    className={`w-4 h-4 rounded-full transition-all duration-300 ${
                       index === currentFace 
-                        ? 'bg-accent scale-125' 
-                        : 'bg-accent/30 hover:bg-accent/50'
+                        ? 'bg-accent scale-110 shadow-lg' 
+                        : 'bg-accent/40 hover:bg-accent/60 hover:scale-105'
                     }`}
                   />
                 ))}
@@ -254,15 +254,15 @@ export function MangaLanding() {
               {/* Botões de navegação */}
               <button
                 onClick={() => setCurrentFace((prev) => (prev - 1 + mangaFaces.length) % mangaFaces.length)}
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-accent p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-accent p-3 rounded-full shadow-xl transition-all duration-300 hover:scale-110 backdrop-blur-sm"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-6 h-6" />
               </button>
               <button
                 onClick={() => setCurrentFace((prev) => (prev + 1) % mangaFaces.length)}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-accent p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-accent p-3 rounded-full shadow-xl transition-all duration-300 hover:scale-110 backdrop-blur-sm"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-6 h-6" />
               </button>
             </div>
           </div>
