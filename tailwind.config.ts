@@ -52,6 +52,16 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Paleta de cores ARTNEX
+				artnex: {
+					red: 'hsl(15 100% 50%)', // Vermelho intenso
+					orange: 'hsl(25 100% 50%)', // Laranja queimado
+					yellow: 'hsl(45 100% 50%)', // Amarelo dourado
+					blue: 'hsl(210 100% 60%)', // Azul celeste
+					royal: 'hsl(220 100% 50%)', // Azul royal
+					cyan: 'hsl(180 100% 50%)', // Ciano claro
+					'deep-cyan': 'hsl(180 100% 40%)', // Ciano profundo
+				},
 				// Custom manga landing page colors
 				manga: {
 					bg: 'hsl(var(--manga-bg))',
@@ -92,11 +102,29 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
+					}
+				},
+				'glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 20px rgba(255, 69, 0, 0.3)'
+					},
+					'50%': {
+						boxShadow: '0 0 30px rgba(255, 69, 0, 0.6)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 3s ease-in-out infinite',
+				'glow': 'glow 2s ease-in-out infinite'
 			}
 		}
 	},
