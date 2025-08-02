@@ -10,6 +10,7 @@ import { activateProtection, handleCheckoutClick } from "@/lib/protection";
 export function MangaLanding() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentFace, setCurrentFace] = useState(0);
+  const [showFaceModal, setShowFaceModal] = useState(false);
   
   // Array de rostos de mangá para o carrossel
   const mangaFaces = [
@@ -58,9 +59,9 @@ export function MangaLanding() {
   ];
   const testimonials = [
     {
-      name: "Maria Silva",
+      name: "Jennifer Santiago",
       role: "Via Instagram",
-      avatar: "M",
+      avatar: "J",
       gradient: "from-pink-400 to-purple-500",
       text: "Gente, sério mesmo! Nunca pensei que conseguiria desenhar rostos assim! O método é demais, cada passo bem explicadinho. Em 2 semanas já tava desenhando muito melhor! 😍"
     },
@@ -76,42 +77,42 @@ export function MangaLanding() {
       role: "Via WhatsApp",
       avatar: "A",
       gradient: "from-green-400 to-emerald-500",
-      text: "Muito bom mesmo! O método é bem simples e funciona mesmo. A técnica de Loomis explicada assim ficou super fácil de entender. Recomendo demais!"
+      text: "Muito bom mesmo! O método é bem simples e funciona mesmo. A técnica de Loomis explicada assim ficou super fácil de entender. Recomendo demais 👏👏👏👏"
     },
     {
       name: "Pedro Oliveira",
       role: "Via WhatsApp",
       avatar: "P",
       gradient: "from-orange-400 to-red-500",
-      text: "O eBook é fantástico! As aulas são super divertidas, o professor mistura comédia com animação. Nunca imaginei que aprender a desenhar rostos pudesse ser tão engraçado!"
+      text: "Pô, que ebook maneiro, mano. As aulas são super divertidas, o professor mistura comédia com animação. Nunca imaginei que aprender a desenhar rostos pudesse ser tão engraçado 🤣🤣"
     },
     {
       name: "Camila Ferreira",
       role: "Via Facebook",
       avatar: "C",
       gradient: "from-purple-400 to-pink-500",
-      text: "As aulas em vídeo são incríveis! O jeito que ele explica com animações e piadas torna tudo muito mais fácil de entender. O eBook complementa perfeitamente!"
+      text: "As aulas em vídeo são incríveis! O jeito que ele explica com animações e piadas torna tudo muito mais fácil de entender. O eBook complementa perfeitamente👌"
     },
     {
       name: "Rafael Costa",
       role: "Via Facebook",
       avatar: "R",
       gradient: "from-teal-400 to-blue-500",
-      text: "Melhor investimento que fiz! O eBook tem tudo que preciso e as aulas são hilárias. Aprendi mais em 1 semana do que em meses tentando sozinho!"
+      text: "Melhor investimento que fiz! O eBook tem tudo que preciso e as aulas são hilárias. Aprendi mais em 1 semana do que em meses tentando sozinho"
     },
     {
-      name: "Juliana Santos",
+      name: "Gustavo Macarini",
       role: "Via Instagram",
-      avatar: "J",
+      avatar: "G",
       gradient: "from-indigo-400 to-purple-500",
-      text: "Adorei como o curso mistura técnica com diversão! As animações nas aulas tornam tudo muito visual e as piadas do professor fazem o tempo voar!"
+      text: "Adorei como o curso mistura técnica com diversão! As animações nas aulas tornam tudo muito visual e as comédias do videos ensinando a desenhar rostos são demais 😊"
     },
     {
-      name: "Diego Almeida",
+      name: "Luiz Felipe",
       role: "Via Instagram",
-      avatar: "D",
+      avatar: "L",
       gradient: "from-yellow-400 to-orange-500",
-      text: "O eBook é completo demais! E as aulas em vídeo são uma experiência única. Nunca ri tanto enquanto aprendia algo tão técnico. Recomendo muito!"
+      text: "O eBook é completo demais! E as aulas em vídeo são uma experiência única. Nunca ri tanto enquanto aprendia algo tão técnico"
     }
   ];
 
@@ -217,54 +218,11 @@ export function MangaLanding() {
               Mesmo que você nunca tenha desenhado antes
             </p>
             <p className="text-lg text-foreground mb-8">
-            Com um método simples e comprovado, você vai sair do zero em menos de <span className="text-accent font-bold">2 dias</span>. Com <span className="text-black-500 font-bold">aulas em vídeo e um eBook completo</span>, você aprenderá a criar personagens no estilo japonês, com traços profissionais e expressivos!            </p>
+              Com um método simples e comprovado, você vai sair do zero em menos de <span className="text-accent font-bold">7 dias</span>. Com <span className="text-black-500 font-bold">aulas em vídeo e um eBook completo</span>, você aprenderá a criar personagens no estilo japonês, com traços profissionais e expressivos!
+            </p>
           </div>
           <div className="flex justify-center">
-            <div className="relative w-full max-w-lg">
-              {/* Carrossel de Rostos de Mangá */}
-              <div className="rounded-xl shadow-2xl bg-white overflow-hidden">
-                <div className="relative aspect-[4/5]">
-                  <img 
-                    src={mangaFaces[currentFace].image} 
-                    alt={mangaFaces[currentFace].name}
-                    className="w-full h-full object-cover transition-all duration-700 ease-in-out"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
-                    <p className="text-white text-lg font-semibold mb-1 transition-all duration-500">{mangaFaces[currentFace].name}</p>
-                    <p className="text-white/90 text-sm transition-all duration-500">{mangaFaces[currentFace].description}</p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Navegação do carrossel */}
-              <div className="flex justify-center mt-6 gap-3">
-                {mangaFaces.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentFace(index)}
-                    className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                      index === currentFace 
-                        ? 'bg-accent scale-110 shadow-lg' 
-                        : 'bg-accent/40 hover:bg-accent/60 hover:scale-105'
-                    }`}
-                  />
-                ))}
-              </div>
-              
-              {/* Botões de navegação */}
-              <button
-                onClick={() => setCurrentFace((prev) => (prev - 1 + mangaFaces.length) % mangaFaces.length)}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-accent p-3 rounded-full shadow-xl transition-all duration-300 hover:scale-110 backdrop-blur-sm"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={() => setCurrentFace((prev) => (prev + 1) % mangaFaces.length)}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-accent p-3 rounded-full shadow-xl transition-all duration-300 hover:scale-110 backdrop-blur-sm"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </div>
+            <img src={heroImage} alt="eBook Como Desenhar Rosto Estilo Mangá" className="max-w-full h-auto rounded-lg shadow-2xl" />
           </div>
           <CTAButton size="lg" className="w-full lg:w-auto" onClick={handleCheckoutClick}>
             Quero Aprender Agora
@@ -296,6 +254,79 @@ export function MangaLanding() {
           </div>
         </div>
       </div>
+    </section>
+
+     {/* Nova seção: Carrossel de Rostos de Mangá */}
+    <section className="py-16 bg-background">
+      <div className="container mx-auto max-w-3xl px-4">
+        <div className="text-center mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Domine os traços que fazem os rostos mangá se destacarem</h2>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="relative w-full max-w-xs">
+            <div className="rounded-xl shadow-2xl bg-white overflow-hidden cursor-pointer" onClick={() => setShowFaceModal(true)}>
+              <div className="relative aspect-[4/5]">
+                <img 
+                  src={mangaFaces[currentFace].image} 
+                  alt={mangaFaces[currentFace].name}
+                  className="w-full h-full object-cover transition-all duration-700 ease-in-out"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
+                  <p className="text-white text-lg font-semibold mb-1 transition-all duration-500">{mangaFaces[currentFace].name}</p>
+                  <p className="text-white/90 text-sm transition-all duration-500">{mangaFaces[currentFace].description}</p>
+                </div>
+              </div>
+            </div>
+            {/* Navegação do carrossel */}
+            <div className="flex justify-center mt-6 gap-3">
+              {mangaFaces.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentFace(index)}
+                  className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                    index === currentFace 
+                      ? 'bg-accent scale-110 shadow-lg' 
+                      : 'bg-accent/40 hover:bg-accent/60 hover:scale-105'
+                  }`}
+                />
+              ))}
+            </div>
+            {/* Botões de navegação */}
+            <button
+              onClick={() => setCurrentFace((prev) => (prev - 1 + mangaFaces.length) % mangaFaces.length)}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-accent p-2 rounded-full shadow-xl transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+              style={{ zIndex: 2 }}
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setCurrentFace((prev) => (prev + 1) % mangaFaces.length)}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-accent p-2 rounded-full shadow-xl transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+              style={{ zIndex: 2 }}
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+          <p className="mt-6 text-center text-accent font-semibold text-lg">Clique na imagem para ver em detalhes!</p>
+        </div>
+      </div>
+
+      {/* Modal de imagem ampliada */}
+      {showFaceModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80" onClick={() => setShowFaceModal(false)}>
+          <div className="relative max-w-md w-full" onClick={e => e.stopPropagation()}>
+            <img src={mangaFaces[currentFace].image} alt={mangaFaces[currentFace].name} className="w-full h-auto rounded-xl shadow-2xl" />
+            <button
+              className="absolute top-2 right-2 bg-white/80 hover:bg-white text-accent p-2 rounded-full shadow"
+              onClick={() => setShowFaceModal(false)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
     </section>
 
     {/* What You'll Learn */}
