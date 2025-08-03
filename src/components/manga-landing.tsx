@@ -238,9 +238,27 @@ export function MangaLanding() {
             </p>
           </div>
           <div className="flex justify-center">
-            <div className="relative group">
+            <div className="relative group w-full max-w-2xl">
               <div className="absolute inset-0 bg-gradient-to-r from-artnex-red via-artnex-orange to-artnex-yellow rounded-lg blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-              <img src={heroImage} alt="eBook Como Desenhar Rosto Estilo Mangá" className="relative max-w-full h-auto rounded-lg shadow-2xl border-2 border-artnex-red/20" />
+              <div className="relative w-full">
+                <div className="wistia_responsive_padding" style={{padding: '56.25% 0 0 0', position: 'relative'}}>
+                  <div className="wistia_responsive_wrapper" style={{height: '100%', left: '0', position: 'absolute', top: '0', width: '100%'}}>
+                    <iframe 
+                      src="https://fast.wistia.net/embed/iframe/xrgva5o9w6?web_component=true&seo=false&autoplay=false" 
+                      title="VLS FEITA PARA CURSO DE DSENHO Video" 
+                      allow="autoplay; fullscreen" 
+                      allowTransparency={true} 
+                      frameBorder="0" 
+                      scrolling="no" 
+                      className="wistia_embed" 
+                      name="wistia_embed" 
+                      width="100%" 
+                      height="100%"
+                      style={{borderRadius: '8px'}}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <CTAButton size="lg" className="w-full lg:w-auto bg-gradient-to-r from-artnex-red to-artnex-orange hover:from-artnex-orange hover:to-artnex-red text-white border-0 animate-glow" onClick={handleCheckoutClick}>
