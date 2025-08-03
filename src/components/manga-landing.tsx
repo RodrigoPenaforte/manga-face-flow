@@ -18,6 +18,18 @@ export function MangaLanding() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [currentFace, setCurrentFace] = useState(0);
   const [showFaceModal, setShowFaceModal] = useState(false);
+  const [showCTAButton, setShowCTAButton] = useState(false);
+  const [showRestOfPage, setShowRestOfPage] = useState(false);
+
+  // Timer para mostrar o botão CTA e resto da página após 1 minuto (VLS technique)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowCTAButton(true);
+      setShowRestOfPage(true);
+    }, 100000); // 100 segundos = 1 minuto 40 segundos
+
+    return () => clearTimeout(timer);
+  }, []);
   
   // Array de rostos de mangá para o carrossel
   const mangaFaces = [
@@ -261,15 +273,20 @@ export function MangaLanding() {
               </div>
             </div>
           </div>
-          <CTAButton size="lg" className="w-full lg:w-auto bg-gradient-to-r from-artnex-red to-artnex-orange hover:from-artnex-orange hover:to-artnex-red text-white border-0 animate-glow" onClick={handleCheckoutClick}>
-            Quero Aprender Agora
-          </CTAButton>
+          {showCTAButton && (
+            <CTAButton size="lg" className="w-full lg:w-auto bg-gradient-to-r from-artnex-red to-artnex-orange hover:from-artnex-orange hover:to-artnex-red text-white border-0 animate-glow" onClick={handleCheckoutClick}>
+              Quero Aprender Agora
+            </CTAButton>
+          )}
         </div>
       </div>
     </section>
 
-    {/* Product Presentation */}
-    <section className="py-16 bg-card relative">
+    {/* Resto da página - aparece após 1 minuto */}
+    {showRestOfPage && (
+      <>
+        {/* Product Presentation */}
+        <section className="py-16 bg-card relative">
       <div className="container mx-auto max-w-4xl px-4 text-center relative z-10">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
@@ -602,6 +619,8 @@ export function MangaLanding() {
         </Accordion>
       </div>
     </section>
+      </>
+    )}
     </div>
   );
 }
