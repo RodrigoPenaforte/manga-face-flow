@@ -21,12 +21,12 @@ export function MangaLanding() {
   const [showCTAButton, setShowCTAButton] = useState(false);
   const [showRestOfPage, setShowRestOfPage] = useState(false);
 
-  // Timer para mostrar o botão CTA e resto da página após 1 minuto (VLS technique)
+  // Timer para mostrar o botão CTA e resto da página após 6 segundos (VLS technique)
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowCTAButton(true);
       setShowRestOfPage(true);
-    }, 100000); // 100 segundos = 1 minuto 40 segundos
+    }, 6000); // 6 segundos
 
     return () => clearTimeout(timer);
   }, []);
