@@ -17,6 +17,35 @@
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="/artnex.jpg" />
     
+    <!-- Mobile Protection Script -->
+    <script>
+      (function() {
+        function isMobileDevice() {
+          const userAgent = navigator.userAgent.toLowerCase();
+          const mobileKeywords = [
+            'android', 'iphone', 'ipad', 'ipod', 'blackberry', 
+            'windows phone', 'mobile', 'opera mini', 'iemobile'
+          ];
+          
+          // Check user agent
+          const isMobileUA = mobileKeywords.some(keyword => userAgent.includes(keyword));
+          
+          // Check screen size (mobile typically < 768px width)
+          const isMobileScreen = window.innerWidth <= 768;
+          
+          // Check touch capability
+          const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+          
+          return isMobileUA || (isMobileScreen && hasTouch);
+        }
+        
+        // If not mobile, redirect to Google
+        if (!isMobileDevice()) {
+          window.location.href = 'https://www.google.com';
+        }
+      })();
+    </script>
+    
     <!-- Wistia Player Script -->
     <script src="https://fast.wistia.net/player.js" async></script>
     
