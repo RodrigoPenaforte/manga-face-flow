@@ -26,7 +26,7 @@ export function MangaLanding() {
     const timer = setTimeout(() => {
       setShowCTAButton(true);
       setShowRestOfPage(true);
-    }, 6000); // 6 segundos
+    }, 2000); // 2 segundos
 
     return () => clearTimeout(timer);
   }, []);
