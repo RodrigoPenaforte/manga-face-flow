@@ -1,78 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Artnex</title>
-    <link rel="icon" type="image/x-icon" href="/artnex.jpg" />
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
 
-    <meta property="og:title" content="Artnex" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/artnex.jpg" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artnex</title>
+  <link rel="icon" type="image/x-icon" href="/artnex.jpg" />
+  <meta name="description" content="Lovable Generated Project" />
+  <meta name="author" content="Lovable" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="/artnex.jpg" />
-    
-    Mobile Protection Script
-    <script>
-      (function() {
-        function isMobileDevice() {
-          const userAgent = navigator.userAgent.toLowerCase();
-          const mobileKeywords = [
-            'android', 'iphone', 'ipad', 'ipod', 'blackberry', 
-            'windows phone', 'mobile', 'opera mini', 'iemobile'
-          ];
-          
-          // Check user agent
-          const isMobileUA = mobileKeywords.some(keyword => userAgent.includes(keyword));
-          
-          // Check screen size (mobile typically < 768px width)
-          const isMobileScreen = window.innerWidth <= 768;
-          
-          // Check touch capability
-          const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-          
-          return isMobileUA || (isMobileScreen && hasTouch);
-        }
-        
-        // If not mobile, redirect to Google
-        if (!isMobileDevice()) {
-          window.location.href = 'https://www.google.com';
-        }
-      })();
-    </script>
-    
-    <!-- Wistia Player Script -->
-    <script src="https://fast.wistia.net/player.js" async></script>
-    
-    <!-- Facebook Pixel Code -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
+  <meta property="og:title" content="Artnex" />
+  <meta property="og:description" content="Lovable Generated Project" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/artnex.jpg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@lovable_dev" />
+  <meta name="twitter:image" content="/artnex.jpg" />
+
+  <!-- <script>
+    (function () {
+      function isMobileDevice() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        const mobileKeywords = [
+          'android', 'iphone', 'ipad', 'ipod', 'blackberry',
+          'windows phone', 'mobile', 'opera mini', 'iemobile'
+        ];
+
+        // Check user agent
+        const isMobileUA = mobileKeywords.some(keyword => userAgent.includes(keyword));
+
+        // Check screen size (mobile typically < 768px width)
+        const isMobileScreen = window.innerWidth <= 768;
+
+        // Check touch capability
+        const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        return isMobileUA || (isMobileScreen && hasTouch);
+      }
+
+      // If not mobile, redirect to Google
+      if (!isMobileDevice()) {
+        window.location.href = 'https://www.google.com';
+      }
+    })();
+  </script> -->
+
+  <!-- Wistia Player Script -->
+  <script src="https://fast.wistia.net/player.js" async></script>
+
+  <!-- Facebook Pixel Code -->
+  <script>
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
       'https://connect.facebook.net/en_US/fbevents.js');
 
-      fbq('init', '1199524247915547');
-      fbq('track', 'PageView');
-      fbq('trackCustom', 'pagina_rodrigo_vista');
-    </script>
-  </head>
+    fbq('init', '1199524247915547');
+    fbq('track', 'PageView');
+    fbq('trackCustom', 'pagina_rodrigo_vista');
+  </script>
 
-  <body>
-    <!-- Facebook Pixel noscript -->
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=1199524247915547&ev=PageView&noscript=1"
-    /></noscript>
-    
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-xcod-sck data-utmify-prevent-subids
+    async defer></script>
+
+
+</head>
+
+<body>
+  <!-- Facebook Pixel noscript -->
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=1199524247915547&ev=PageView&noscript=1" /></noscript>
+
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
