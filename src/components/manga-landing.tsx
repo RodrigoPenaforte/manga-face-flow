@@ -30,52 +30,7 @@ export function MangaLanding() {
 
     return () => clearTimeout(timer);
   }, []);
-  
-  // Array de rostos de mangá para o carrossel
-  const mangaFaces = [
-    {
-      id: 1,
-      name: "Nezuko",
-      image: nezukoImage,
-      description: "Expressão inocente e doce",
-      bgColor: "bg-artnex-red/20"
-    },
-    {
-      id: 2,
-      name: "Goku Criança", 
-      image: gokuCriancaImage,
-      description: "Expressão alegre e inocente",
-      bgColor: "bg-artnex-yellow/20"
-    },
-    {
-      id: 3,
-      name: "Sasuke Esboço",
-      image: sasukeEsbocoImage, 
-      description: "Expressão séria e determinada",
-      bgColor: "bg-artnex-blue/20"
-    },
-    {
-      id: 4,
-      name: "Anime Sketch Pensativo",
-      image: thoughtfulAnimeImage,
-      description: "Expressão pensativa e misteriosa",
-      bgColor: "bg-artnex-cyan/20"
-    },
-    {
-      id: 5,
-      name: "Sung Jin Woo",
-      image: sungJinWooImage,
-      description: "Expressão confiante e focada",
-      bgColor: "bg-artnex-orange/20"
-    },
-    {
-      id: 6,
-      name: "Levi Ackerman",
-      image: leviAckermanImage,
-      description: "Expressão intensa e séria",
-      bgColor: "bg-artnex-royal/20"
-    }
-  ];
+   
 
   const testimonials = [
     {
@@ -167,13 +122,6 @@ export function MangaLanding() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perPage]);
 
-  // Carrossel automático de rostos
-  useEffect(() => {
-    const faceInterval = setInterval(() => {
-      setCurrentFace((prev) => (prev + 1) % mangaFaces.length);
-    }, 3000);
-    return () => clearInterval(faceInterval);
-  }, [mangaFaces.length]);
 
   // Funções de swipe
   function handleTouchStart(e) {
@@ -312,80 +260,7 @@ export function MangaLanding() {
         </div>
       </div>
     </section>
-
-     {/* Nova seção: Carrossel de Rostos de Mangá */}
-    <section className="py-16 bg-background relative">
-      <div className="container mx-auto max-w-3xl px-4 relative z-10">
-        <div className="text-center mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Domine os traços que fazem os rostos mangá se destacarem</h2>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="relative w-full max-w-xs">
-            <div className="rounded-xl shadow-2xl bg-card overflow-hidden cursor-pointer border-2 border-artnex-red/20 hover:border-artnex-red/40 transition-all duration-300" onClick={() => setShowFaceModal(true)}>
-              <div className="relative aspect-[4/5]">
-                <img 
-                  src={mangaFaces[currentFace].image} 
-                  alt={mangaFaces[currentFace].name}
-                  className="w-full h-full object-cover transition-all duration-700 ease-in-out"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
-                  <p className="text-white text-lg font-semibold mb-1 transition-all duration-500">{mangaFaces[currentFace].name}</p>
-                  <p className="text-white/90 text-sm transition-all duration-500">{mangaFaces[currentFace].description}</p>
-                </div>
-              </div>
-            </div>
-            {/* Navegação do carrossel */}
-            <div className="flex justify-center mt-6 gap-3">
-              {mangaFaces.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentFace(index)}
-                  className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                    index === currentFace 
-                      ? 'bg-gradient-to-r from-artnex-red to-artnex-orange scale-110 shadow-lg' 
-                      : 'bg-artnex-red/40 hover:bg-artnex-red/60 hover:scale-105'
-                  }`}
-                />
-              ))}
-            </div>
-            {/* Botões de navegação */}
-            <button
-              onClick={() => setCurrentFace((prev) => (prev - 1 + mangaFaces.length) % mangaFaces.length)}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-card/90 hover:bg-card text-artnex-red p-2 rounded-full shadow-xl transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-artnex-red/20"
-              style={{ zIndex: 2 }}
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setCurrentFace((prev) => (prev + 1) % mangaFaces.length)}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-card/90 hover:bg-card text-artnex-red p-2 rounded-full shadow-xl transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-artnex-red/20"
-              style={{ zIndex: 2 }}
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-          <p className="mt-6 text-center text-artnex-yellow font-semibold text-lg">Clique na imagem para ver em detalhes!</p>
-        </div>
-      </div>
-
-      {/* Modal de imagem ampliada */}
-      {showFaceModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80" onClick={() => setShowFaceModal(false)}>
-          <div className="relative max-w-md w-full" onClick={e => e.stopPropagation()}>
-            <img src={mangaFaces[currentFace].image} alt={mangaFaces[currentFace].name} className="w-full h-auto rounded-xl shadow-2xl border-2 border-artnex-red/20" />
-            <button
-              className="absolute top-2 right-2 bg-card/80 hover:bg-card text-artnex-red p-2 rounded-full shadow border border-artnex-red/20"
-              onClick={() => setShowFaceModal(false)}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      )}
-    </section>
-
+   
     {/* What You'll Learn */}
     <section className="py-16 bg-card relative">
       <div className="container mx-auto max-w-4xl px-4 relative z-10">
