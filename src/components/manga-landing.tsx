@@ -545,7 +545,7 @@ export function MangaLanding() {
           </Badge>
           <h2 className="text-3xl font-bold text-foreground mb-8">
             <span className="text-artnex-red line-through mr-2">R$97,90</span>
-            por apenas <span className="artnex-text-gradient">R$19,90!</span>
+            por apenas <span className="artnex-text-gradient">R$28,90!</span>
           </h2>
         </div>
 
@@ -577,7 +577,7 @@ export function MangaLanding() {
           <div className="flex flex-col justify-center">
             <div className="bg-gradient-to-r from-artnex-red/20 to-artnex-orange/20 p-6 rounded-lg text-center mb-6 border border-artnex-red/20">
               <p className="text-lg font-bold text-foreground">
-              🎉 Ao adquirir hoje, você leva tudo isso por um <span className="text-artnex-red font-bold">VALOR ÚNICO</span> de <span className="artnex-text-gradient font-bold">R$19,90!</span>              </p>
+              🎉 Ao adquirir hoje, você leva tudo isso por um <span className="text-artnex-red font-bold">VALOR ÚNICO</span> de <span className="artnex-text-gradient font-bold">R$28,90!</span>              </p>
             </div>
             <CTAButton size="lg" className="w-full bg-gradient-to-r from-artnex-red to-artnex-orange hover:from-artnex-orange hover:to-artnex-red text-white border-0 animate-glow" onClick={handleCheckoutClick}>SIM, QUERO COMEÇAR AGORA</CTAButton>
           </div>
